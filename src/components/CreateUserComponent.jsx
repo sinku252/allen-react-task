@@ -51,24 +51,19 @@ const CreateUserComponent = () => {
             UserService.updateUser(userJson, id).then(res => {
                 navigate('/');
                 setIsLoading(false)
+            }).catch(err => {
+                setIsLoading(false)
+                alert(err);
             });
         }
     }
 
     const changeNameHandler = (nameValue) => {
-        let userTemp = user;
-        setUser({
-            name: nameValue,
-            email: userTemp.email
-        });
+        setUser({...user, name: nameValue})
     }
 
     const changeEmailHandler = (emailValue) => {
-        let userTemp = user;
-        setUser({
-            name:  userTemp.name,
-            email:emailValue
-        });
+        setUser({...user, email: emailValue})
     }
 
     const cancel = () => {
@@ -117,7 +112,7 @@ const CreateUserComponent = () => {
                                 </div>
                                     <div style={{marginTop: "10px"}} onChange={onChangeGender}>
                                         <input type="radio" value={user.gender} name="gender" /> Male
-                                        <input style={{ marginLeft: "10px" }} type="radio" value={user.name} name="gender" /> Female
+                                        <input style={{ marginLeft: "10px" }} type="radio" value={user.gender} name="gender" /> Female
                                     </div>
                                     
                                     <div style={{marginTop: "10px"}} onChange={onChangeStatus}>

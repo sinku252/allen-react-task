@@ -24,6 +24,9 @@ const ListUserComponent = () => {
         UserService.getUserList(page).then((res) => {
             setUsers(res.data);
             setIsLoading(false)
+        }).catch(err => {
+            setIsLoading(false)
+            alert(err);
         });
 
     }, []);

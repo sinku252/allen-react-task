@@ -25,6 +25,9 @@ const AddPostComment = () => {
             setIsLoading(false)
             navigate(-1)
             
+        }).catch(err => {
+            setIsLoading(false)
+            alert(err);
         });
     }
 
@@ -34,17 +37,11 @@ const AddPostComment = () => {
     }
 
     const postTitle = (value) => {
-        setPostComment({
-            name: value,
-            body: postComment.body
-        });
+        setPostComment({...postComment, name: value})
     }
 
     const postBody = (value) => {
-        setPostComment({
-            name:postComment.name,
-            body:value
-        });
+        setPostComment({...postComment, body: value})
     }
 
     const getTitle = () => {

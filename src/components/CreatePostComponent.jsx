@@ -25,6 +25,9 @@ const CreatePostComponent = () => {
         PostService.createPost(post,id).then(res => {
             navigate(-1)
             setIsLoading(false)
+        }).catch(err => {
+            setIsLoading(false)
+            alert(err);
         });
     }
 
@@ -34,17 +37,11 @@ const CreatePostComponent = () => {
     }
 
     const postTitle = (value) => {
-        setPost({
-            title: value,
-            body: post.body
-        });
+        setPost({...post, title: value})
     }
 
     const postBody = (value) => {
-        setPost({
-            title:post.title,
-            body:value
-        });
+        setPost({...post, body: value})
     }
 
     const getTitle = () => {

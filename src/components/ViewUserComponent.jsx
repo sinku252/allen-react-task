@@ -15,6 +15,9 @@ const ViewUserComponent = () =>
         UserService.getUserDetails(id).then( res => {
             setUser(res.data);
             setIsLoading(false)
+        }).catch(err => {
+            setIsLoading(false)
+            alert(err);
         })
 
     }, []);

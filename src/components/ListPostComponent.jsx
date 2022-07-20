@@ -16,6 +16,9 @@ const ListPostComponent = () => {
         PostService.getPostList(id).then((res) => {
             setPosts(res.data);
             setIsLoading(false)
+        }).catch(err => {
+            setIsLoading(false)
+            alert(err);
         });
 
     }, []);

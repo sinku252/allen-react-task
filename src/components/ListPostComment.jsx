@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from "react-router-dom";
 import PostService from '../services/PostService'
 import {  useParams } from 'react-router-dom'
+import LoadingSpinner from "../common/LoadingSpinner";
 
 const ListPostComment = () => {
     const { id } = useParams()
@@ -17,6 +18,9 @@ const ListPostComment = () => {
         PostService.getCommentList(id).then((res) => {
             setComments(res.data);
             setIsLoading(false)
+        }).catch(err => {
+            setIsLoading(false)
+            alert(err);
         });
 
     }, []);
