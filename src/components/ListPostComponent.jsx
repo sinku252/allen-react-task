@@ -8,12 +8,14 @@ const ListPostComponent = () => {
 
     const [posts, setPosts] = React.useState(null);
     const navigate = useNavigate();
-
+    const [isLoading, setIsLoading] = React.useState(false);
    
 
     React.useEffect(() => {
+        setIsLoading(true)
         PostService.getPostList(id).then((res) => {
             setPosts(res.data);
+            setIsLoading(false)
         });
 
     }, []);
@@ -32,6 +34,7 @@ const ListPostComponent = () => {
     }
    
     return (
+        isLoading ? <LoadingSpinner /> :
         <div>
             <h2 className="text-center">Posts List</h2>
             <div className = "row">

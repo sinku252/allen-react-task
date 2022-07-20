@@ -8,12 +8,15 @@ const ListPostComment = () => {
 
     const [comments, setComments] = React.useState(null);
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = React.useState(false);
 
    
 
     React.useEffect(() => {
+         setIsLoading(true)
         PostService.getCommentList(id).then((res) => {
             setComments(res.data);
+            setIsLoading(false)
         });
 
     }, []);
@@ -22,6 +25,7 @@ const ListPostComment = () => {
 
    
     return (
+        isLoading ? <LoadingSpinner /> :
         <div>
             <h2 className="text-center">Post Comment List</h2>
             

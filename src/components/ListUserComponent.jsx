@@ -8,6 +8,8 @@ const ListUserComponent = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [page, setPage] = useState(1);
 
+    const [loadingText, setLoadingText] = useState("Load More");
+
     const navigate = useNavigate();
 
     const viewUser= (id) =>{
@@ -32,7 +34,7 @@ const ListUserComponent = () => {
         navigate('/add-user/_add');
     }
     const posts= (user) =>{
-        console.log(`/user-posts/${user.id,user.email}`)
+        localStorage.setItem('userEmail', user.email);
         navigate(`/user-posts/${user.id}`);
     }
 
@@ -42,10 +44,12 @@ const ListUserComponent = () => {
             res.data.map(user => (  
                 setUsers(users => [...users, user])
               ))
+              setIsLoading(false)
         });
     }
 
      return (
+        isLoading ? <LoadingSpinner /> :
         <div>
              <h2 className="text-center">Users List</h2>
              <div className = "row">
@@ -86,17 +90,13 @@ const ListUserComponent = () => {
 
              </div>
              <div className = "row">
-                <button className="btn btn-primary" onClick={loadMore}> Load More</button>
+                <button className="btn btn-primary" onClick={loadMore}> {loadingText}</button>
              </div>
 
         </div>
     );
 
-    /* return (
-        <div>
-        {isLoading ? <LoadingSpinner /> : renderViews}
-        </div>
-    ); */
+    
 }
 
 export default ListUserComponent;

@@ -23,9 +23,7 @@ const ViewUserComponent = () =>
 
     return (
         <div className="container">
-          {isLoading ? (
-             <LoadingSpinner />
-          ) : (
+          {isLoading ? <LoadingSpinner /> : 
             <div>
             <br></br>
             <div className = "card col-md-6 offset-md-3">
@@ -43,7 +41,7 @@ const ViewUserComponent = () =>
     
             </div>
         </div>
-          )}
+          }
         </div>
       );
    

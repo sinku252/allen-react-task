@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import {  useParams } from 'react-router-dom'
 import { useNavigate } from "react-router-dom";
 import PostService from '../services/PostService';
-
+import LoadingSpinner from "../common/LoadingSpinner";
 
 const AddPostComment = () => {
     const { id } = useParams()
 
     const [postComment, setPostComment] = React.useState({name: '', body: ''});
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = React.useState(false);
 
    
     React.useEffect(() => {
@@ -17,13 +18,13 @@ const AddPostComment = () => {
     }, []);
 
     const addComment = (e) => {
+        setIsLoading(true)
         e.preventDefault();
-        let postCommentJson = {"post":id,"name":postComment.name,"email":"test@text.com","body":postComment.body}
-       /*   let postJson = {"post":"1547","name":"my comment","email":"test@text.com","body":"my new comment body"};
-        console.log('user => ' + JSON.stringify(post)); */
-
+        let postCommentJson = {"post":id,"name":postComment.name,"email":localStorage.getItem('userEmail'),"body":postComment.body}
         PostService.createComment(postCommentJson,id).then(res => {
+            setIsLoading(false)
             navigate(-1)
+            
         });
     }
 
@@ -53,6 +54,7 @@ const AddPostComment = () => {
     if (!setPostComment) return null;
 
     return (
+        isLoading ? <LoadingSpinner /> :
         <div>
             <br></br>
             <div className="container">

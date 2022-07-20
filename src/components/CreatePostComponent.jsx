@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 import {  useParams } from 'react-router-dom'
 import { useNavigate } from "react-router-dom";
 import PostService from '../services/PostService';
-
+import LoadingSpinner from "../common/LoadingSpinner";
 
 const CreatePostComponent = () => {
     const { id } = useParams()
 
     const [post, setPost] = React.useState({title: '', body: ''});
     const navigate = useNavigate();
-
+    const [isLoading, setIsLoading] = React.useState(false);
    
     React.useEffect(() => {
        
@@ -17,12 +17,14 @@ const CreatePostComponent = () => {
     }, []);
 
     const savePost = (e) => {
+        setIsLoading(true)
         e.preventDefault();
        /*   let postJson = {title: post.title, body: post.postBody};
         console.log('user => ' + JSON.stringify(post)); */
 
         PostService.createPost(post,id).then(res => {
             navigate(-1)
+            setIsLoading(false)
         });
     }
 
@@ -52,6 +54,7 @@ const CreatePostComponent = () => {
     if (!post) return null;
 
     return (
+        isLoading ? <LoadingSpinner /> :
         <div>
             <br></br>
             <div className="container">
