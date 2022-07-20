@@ -4,8 +4,9 @@ import UserService from '../services/UserService'
 import LoadingSpinner from "../common/LoadingSpinner";
 
 const ListUserComponent = () => {
-    const [users, setUsers] = React.useState(null);
+    const [users, setUsers] = useState([{}]);
     const [isLoading, setIsLoading] = useState(false);
+    const [page, setPage] = useState(1);
 
     const navigate = useNavigate();
 
@@ -18,7 +19,7 @@ const ListUserComponent = () => {
    
     React.useEffect(() => {
         setIsLoading(true)
-        UserService.getUserList(1).then((res) => {
+        UserService.getUserList(page).then((res) => {
             setUsers(res.data);
             setIsLoading(false)
         });
@@ -35,7 +36,16 @@ const ListUserComponent = () => {
         navigate(`/user-posts/${user.id}`);
     }
 
-    const renderViews = (
+    const loadMore = () =>{
+        setPage((prevCount) => prevCount + 1);
+        UserService.getUserList(page).then((res) => {
+            res.data.map(user => (  
+                setUsers(users => [...users, user])
+              ))
+        });
+    }
+
+     return (
         <div>
              <h2 className="text-center">Users List</h2>
              <div className = "row">
@@ -75,15 +85,18 @@ const ListUserComponent = () => {
                     </table>
 
              </div>
+             <div className = "row">
+                <button className="btn btn-primary" onClick={loadMore}> Load More</button>
+             </div>
 
         </div>
     );
 
-    return (
+    /* return (
         <div>
         {isLoading ? <LoadingSpinner /> : renderViews}
         </div>
-    );
+    ); */
 }
 
 export default ListUserComponent;

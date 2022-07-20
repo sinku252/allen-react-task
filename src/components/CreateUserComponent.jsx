@@ -62,7 +62,7 @@ const CreateUserComponent = () => {
     }
 
     const cancel = () => {
-        navigate('/users');
+        navigate(-1)
     }
 
 

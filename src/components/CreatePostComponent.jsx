@@ -28,7 +28,7 @@ const CreatePostComponent = () => {
 
     
     const cancel = () => {
-        navigate('/users');
+        navigate(-1)
     }
 
     const postTitle = (value) => {
